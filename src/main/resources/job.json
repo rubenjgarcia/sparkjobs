@@ -1,0 +1,70 @@
+{
+  "config": {
+    "appName": "Word Count",
+    "master": "local[8]"
+  },
+  "rdds": [
+    {
+      "path": "/home/rjgarcia/Documents/Projects/SparkJobs/target/scala-2.11/classes/../../../src/main/resources/quijote.txt",
+      "type": "textFile"
+    }
+  ],
+  "transformations": [
+    {
+      "type": "split",
+      "regex": " "
+    },
+    {
+      "type": "lengthFilter",
+      "length": 3
+    },
+    {
+      "type": "replaceAll",
+      "regex": [
+        ",",
+        ":",
+        ";",
+        "[?]",
+        "¿",
+        "!",
+        "¡",
+        "\"",
+        "[(]",
+        "[)]",
+        "[.]"
+      ],
+      "replacement": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "type": "lowerCase"
+    },
+    {
+      "type": "tuplelize",
+      "value": 1
+    },
+    {
+      "type": "reduceByKeySum"
+    },
+    {
+      "type": "sortByKey",
+      "ascending": true
+    }
+  ],
+  "actions": [
+    {
+      "type": "collect"
+    }
+  ]
+}
