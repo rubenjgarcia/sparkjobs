@@ -1,12 +1,14 @@
-package es.sparkjobs
+package es.sparkjobs.test
 
 import es.sparkjobs.dsl.SparkJobDSL._
 import es.sparkjobs.dsl.rdds._
 import es.sparkjobs.dsl.transformations._
 import es.sparkjobs.dsl.actions._
+import org.scalatest._
 
-object Test extends App {
-  override def main(args: Array[String]): Unit = {
+class WordCountSpec extends UnitSpec {
+
+  "It" should "count words" in {
     val job = {
       config("Word Count", "local[8]") rdd {
         fromfile("/home/rjgarcia/Documents/Projects/SparkJobs/target/scala-2.11/classes/../../../src/main/resources/quijote.txt") transformWith {
@@ -17,11 +19,11 @@ object Test extends App {
             tuplelize(1) andWith
             reduceByKeySum andWith
             sortByValue(false)
-        } action collect
+        } action first
       }
     }
 
-    val lines = job.execute().asInstanceOf[Array[(String, Int)]]
-    lines.foreach(println)
+    val result = job.execute()
+    result shouldBe ("quijote", 362)
   }
 }
