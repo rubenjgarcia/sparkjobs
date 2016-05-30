@@ -2,7 +2,6 @@ package es.sparkjobs.dsl
 
 import es.sparkjobs.dsl.rdds.RDD
 import es.sparkjobs.dsl.transformations.Transformation
-import es.sparkjobs.dsl.actions.Action
 
 object SparkJobDSL {
   implicit def config(appName: String, master: String) = Config(appName, master)
