@@ -11,7 +11,7 @@ case class SparkJob(config: Config, rdds: RDD*) {
       .setAppName(config.appName)
       .setMaster(config.master)
 
-    implicit val sc = new SparkContext(conf)
+    implicit val sc = SparkContext.getOrCreate(conf)
 
     val rdd = rdds.head
     val rddT = rdd.transformations.foldLeft[org.apache.spark.rdd.RDD[_]](rdd.toSparkRDD)((rdd, transformation) => {
