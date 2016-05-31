@@ -1,0 +1,82 @@
+{
+  "config": {
+    "appName": "Word Count",
+    "master": "local"
+  },
+  "rdds": [
+    {
+      "type": "textFile",
+      "properties": {
+        "path": "quijote.txt"
+      },
+      "transformations": [
+        {
+          "type": "split",
+          "properties": {
+            "regex": " "
+          }
+        },
+        {
+          "type": "lengthFilter",
+          "properties": {
+            "length": 3
+          }
+        },
+        {
+          "type": "replaceAll",
+          "properties": {
+            "regex": [
+              ",",
+              ":",
+              ";",
+              "[?]",
+              "¿",
+              "!",
+              "¡",
+              "\"",
+              "[(]",
+              "[)]",
+              "[.]"
+            ],
+            "replacement": [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          }
+        },
+        {
+          "type": "lowerCase"
+        },
+        {
+          "type": "tuplelize",
+          "properties": {
+            "value": 1
+          }
+        },
+        {
+          "type": "reduceByKeySum"
+        },
+        {
+          "type": "sortByKey",
+          "properties": {
+            "ascending": true
+          }
+        }
+      ],
+      "actions": [
+        {
+          "type": "collect"
+        }
+      ]
+    }
+  ]
+}

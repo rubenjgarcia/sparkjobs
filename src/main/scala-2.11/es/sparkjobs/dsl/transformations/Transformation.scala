@@ -18,6 +18,8 @@ import org.apache.spark.rdd.RDD
 //  val repartition = 18
 //  val repartitionAndSortWithinPartitions = 19
 
-abstract class Transformation {
+abstract class Transformation(val properties: Map[String, Any] = Map.empty) {
+  val `type`: String
+
   def apply(rdd: RDD[_]) : RDD[_]
 }

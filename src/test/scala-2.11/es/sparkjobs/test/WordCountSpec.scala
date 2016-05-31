@@ -23,7 +23,7 @@ class WordCountSpec extends UnitSpec {
       sortByValue(false)
 
   it should "get first word" in {
-    val countWordRDD: RDD = fromfile(source + "quijote.txt") transformWith transformations
+    val countWordRDD: RDD = fromFile(source + "quijote.txt") transformWith transformations
 
     val job = {
       config("Word Count", "local") rdd (countWordRDD action first)
@@ -34,7 +34,7 @@ class WordCountSpec extends UnitSpec {
   }
 
   it should "get first 3 words" in {
-    val countWordRDD: RDD = fromfile(source + "quijote.txt") transformWith transformations
+    val countWordRDD: RDD = fromFile(source + "quijote.txt") transformWith transformations
 
     val job = {
       config("Word Count", "local") rdd (countWordRDD action take(3))
@@ -45,7 +45,7 @@ class WordCountSpec extends UnitSpec {
   }
 
   it should "count differents words" in {
-    val countWordRDD: RDD = fromfile(source + "quijote.txt") transformWith transformations
+    val countWordRDD: RDD = fromFile(source + "quijote.txt") transformWith transformations
 
     val job = {
       config("Word Count", "local") rdd (countWordRDD action count)
@@ -56,7 +56,7 @@ class WordCountSpec extends UnitSpec {
   }
 
   it should "collects words" in {
-    val countWordRDD: RDD = fromfile(source + "quijote.txt") transformWith transformations
+    val countWordRDD: RDD = fromFile(source + "quijote.txt") transformWith transformations
 
     val job = {
       config("Word Count", "local") rdd (countWordRDD action collect)
@@ -68,7 +68,7 @@ class WordCountSpec extends UnitSpec {
   }
 
   it should "save as text file" in {
-    val countWordRDD: RDD = fromfile(source + "quijote.txt") transformWith transformations
+    val countWordRDD: RDD = fromFile(source + "quijote.txt") transformWith transformations
 
     val job = {
       config("Word Count", "local") rdd (countWordRDD action saveAsTextFile("file:///" + tmpdir + "/wordcount-txt-" + UUID.randomUUID()))
@@ -78,7 +78,7 @@ class WordCountSpec extends UnitSpec {
   }
 
   it should "save as object file" in {
-    val countWordRDD: RDD = fromfile(source + "quijote.txt") transformWith transformations
+    val countWordRDD: RDD = fromFile(source + "quijote.txt") transformWith transformations
 
     val job = {
       config("Word Count", "local") rdd (countWordRDD action saveAsObjectFile("file:///" + tmpdir + "/wordcount-obj-" + UUID.randomUUID()))
